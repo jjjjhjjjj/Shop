@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -25,4 +30,10 @@ export function googleLoginPopup() {
       const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
     });
+}
+
+export function getUserState(callback) {
+  onAuthStateChanged(auth, (user) => {
+    callback(user);
+  });
 }
