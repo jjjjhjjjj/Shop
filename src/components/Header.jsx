@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { login, getUserState, logout } from "../api/firebase";
+import User from "./User";
 
 export default function Header() {
   const [user, setUser] = useState();
@@ -7,12 +8,14 @@ export default function Header() {
   useEffect(() => {
     getUserState((user) => {
       setUser(user);
+      console.log(user);
     });
   }, []);
 
   return (
     <header>
       <h1>Shoppy</h1>
+      {user && <User user={user} />}
       {user ? (
         <button onClick={logout}>로그아웃</button>
       ) : (
