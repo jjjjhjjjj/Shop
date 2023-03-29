@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,6 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
+const db = getDatabase();
 
 export function login() {
   signInWithPopup(auth, provider).catch(console.error);
@@ -30,5 +32,11 @@ export async function logout() {
 export function getUserState(callback) {
   onAuthStateChanged(auth, async (user) => {
     callback(user);
+  });
+}
+
+export async function addNewProduct(product) {
+  set(ref(db, "products/" + product.id), {
+    ...product,
   });
 }
