@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -39,4 +39,14 @@ export async function addNewProduct(product) {
   set(ref(db, "products/" + product.id), {
     ...product,
   });
+}
+
+export async function getProducts(callback) {
+  get(child(ref(db), `products`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        callback(snapshot.val());
+      }
+    })
+    .catch(console.error);
 }
