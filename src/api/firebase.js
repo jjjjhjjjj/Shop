@@ -50,3 +50,17 @@ export async function getProducts(callback) {
     })
     .catch(console.error);
 }
+
+export async function getProduct(callback, id) {
+  get(child(ref(db), `products/${id}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        callback(snapshot.val());
+      }
+    })
+    .catch(console.error);
+}
+
+export async function addCartProduct(userId, cart) {
+  set(ref(db, `carts/${userId}/${Date.now()}`), cart);
+}
