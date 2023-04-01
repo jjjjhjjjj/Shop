@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addCartProduct, getProduct } from "../api/firebase";
+import { useAuth } from "../context/authContext";
 
 export default function ProductDetail() {
+  const { user } = useAuth();
   const { id } = useParams();
   const selectRef = useRef();
   const [isShow, setIsShow] = useState(false);
@@ -28,7 +30,7 @@ export default function ProductDetail() {
       option: selectRef.current.value,
     };
 
-    //addCartProduct(user.uid, cart).then(() => {showMessage();});
+    addCartProduct(user.uid, cart).then(showMessage);
   };
 
   const showMessage = () => {
@@ -55,9 +57,11 @@ export default function ProductDetail() {
               {getOptions()}
             </select>
 
-            <button type="button" onClick={handleClick}>
-              장바구니에 추가
-            </button>
+            {user && (
+              <button type="button" onClick={handleClick}>
+                장바구니에 추가
+              </button>
+            )}
 
             {isShow && <p>✅ 장바구니에 담겼습니다.</p>}
           </div>
