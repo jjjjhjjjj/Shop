@@ -9,6 +9,7 @@ import ProductDetail from "./pages/ProductDetail";
 import MyCart from "./pages/MyCart";
 import App from "./App";
 import { AuthProvider } from "./context/authContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/carts",
-        element: <MyCart />,
+        element: (
+          <ProtectedRoute>
+            <MyCart />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

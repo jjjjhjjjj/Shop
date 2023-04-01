@@ -12,7 +12,7 @@ export default function Header() {
       </Link>
       <nav>
         <Link to="/products">Products</Link>
-        <Link to="/carts">Cart</Link>
+        {user && <Link to="/carts">Cart</Link>}
         <Link to="/products/new">AddProduct</Link>
         {user && <User user={user} />}
         {user ? (
