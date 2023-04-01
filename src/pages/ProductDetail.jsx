@@ -28,10 +28,7 @@ export default function ProductDetail() {
       option: selectRef.current.value,
     };
 
-    //user
-    //addCartProduct(cart);
-
-    showMessage();
+    //addCartProduct(user.uid, cart).then(() => {showMessage();});
   };
 
   const showMessage = () => {

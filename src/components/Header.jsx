@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { login, getUserState, logout } from "../api/firebase";
+import { useAuth } from "../context/authContext";
 import User from "./User";
 
 export default function Header() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    getUserState((user) => {
-      setUser(user);
-    });
-  }, []);
+  const { user, login, logout } = useAuth();
 
   return (
     <header>
