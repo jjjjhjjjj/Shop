@@ -1,26 +1,28 @@
-import { modifyCart, removeCart } from "../api/firebase";
+import { addOrModifyCart, removeCart } from "../api/firebase";
 import { useAuth } from "../context/authContext";
 
 export default function CartItem({
   cart,
   cart: { img, name, option, price, count },
-  id,
 }) {
   const {
     user: { uid },
   } = useAuth();
 
   const handlePlus = () => {
-    modifyCart(uid, id, { ...cart, count: count + 1 });
+    addOrModifyCart(uid, { ...cart, count: count + 1 });
   };
 
   const handleMinus = () => {
-    if (count < 2) return;
-    modifyCart(uid, id, { ...cart, count: count - 1 });
+    if (count < 2) {
+      return;
+    }
+
+    addOrModifyCart(uid, { ...cart, count: count - 1 });
   };
 
   const handleRemove = () => {
-    removeCart(uid, id);
+    removeCart(uid, cart.id);
   };
 
   return (

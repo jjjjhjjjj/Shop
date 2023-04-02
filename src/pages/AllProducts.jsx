@@ -6,15 +6,15 @@ import ProductCard from "../components/ProductCard";
 export default function AllProducts() {
   const [products, setProducts] = useState();
   useEffect(() => {
-    getProducts(setProducts);
+    getProducts().then((data) => setProducts(Object.values(data)));
   }, []);
 
   return (
     <>
       {products ? (
         <ul>
-          {Object.keys(products).map((key) => (
-            <ProductCard key={key} product={products[key]} />
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </ul>
       ) : (

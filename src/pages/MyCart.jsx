@@ -8,7 +8,7 @@ export default function MyCart() {
   const [carts, setCarts] = useState();
 
   useEffect(() => {
-    getCart(user.uid).then(setCarts);
+    getCart(user.uid).then((data) => setCarts(Object.values(data)));
   }, []);
 
   // const totalPrice =
@@ -24,8 +24,8 @@ export default function MyCart() {
       {!carts && <p>장바구니에 상품이 없습니다.</p>}
       {carts && (
         <ul>
-          {Object.keys(carts).map((key) => (
-            <CartItem key={key} cart={carts[key]} id={key} />
+          {carts.map((cart) => (
+            <CartItem key={cart.id} cart={cart} />
           ))}
         </ul>
       )}

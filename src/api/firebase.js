@@ -41,28 +41,16 @@ export async function addNewProduct(product) {
   });
 }
 
-export async function getProducts(callback) {
-  get(child(ref(db), `products`))
+export async function getProducts() {
+  return get(child(ref(db), `products`))
     .then((snapshot) => {
-      if (snapshot.exists()) {
-        callback(snapshot.val());
-      }
+      return snapshot.val() || {};
     })
     .catch(console.error);
 }
 
-export async function getProduct(callback, id) {
-  get(child(ref(db), `products/${id}`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        callback(snapshot.val());
-      }
-    })
-    .catch(console.error);
-}
-
-export async function addCartProduct(userId, cart) {
-  set(ref(db, `carts/${userId}/${Date.now()}`), cart);
+export async function addOrModifyCart(userId, cart) {
+  set(ref(db, `carts/${userId}/${cart.id}`), cart);
 }
 
 export async function getCart(userId) {
@@ -76,8 +64,4 @@ export async function getCart(userId) {
 
 export async function removeCart(userId, cartId) {
   return remove(ref(db, `carts/${userId}/${cartId}`));
-}
-
-export async function modifyCart(userId, cartId, cart) {
-  set(ref(db, `carts/${userId}/${cartId}`), cart);
 }

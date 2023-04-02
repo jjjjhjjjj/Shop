@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { addCartProduct } from "../api/firebase";
+import { addOrModifyCart } from "../api/firebase";
 import { useAuth } from "../context/authContext";
 
 export default function ProductDetail() {
@@ -15,6 +15,7 @@ export default function ProductDetail() {
 
   const handleClick = () => {
     const cart = {
+      id: Date.now(),
       name,
       price,
       img,
@@ -23,7 +24,7 @@ export default function ProductDetail() {
       option: selectRef.current.value,
     };
 
-    addCartProduct(user.uid, cart).then(showMessage);
+    addOrModifyCart(user.uid, cart).then(showMessage);
   };
 
   const showMessage = () => {
