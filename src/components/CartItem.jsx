@@ -1,18 +1,48 @@
-export default function CartItem({ cart }) {
+import { modifyCart, removeCart } from "../api/firebase";
+import { useAuth } from "../context/authContext";
+
+export default function CartItem({
+  cart,
+  cart: { img, name, option, price, count },
+  id,
+}) {
+  const {
+    user: { uid },
+  } = useAuth();
+
+  const handlePlus = () => {
+    modifyCart(uid, id, { ...cart, count: count + 1 });
+  };
+
+  const handleMinus = () => {
+    if (count < 2) return;
+    modifyCart(uid, id, { ...cart, count: count - 1 });
+  };
+
+  const handleRemove = () => {
+    removeCart(uid, id);
+  };
+
   return (
     <li>
-      {/* <img src={cart.url} alt="" />
+      <img src={img} alt="" />
       <div>
-        <strong>{cart.name}</strong>
-        <p>{item.option}</p>
-        <p>{cart.price}</p>
+        <strong>{name}</strong>
+        <p>{option}</p>
+        <p>{price}</p>
       </div>
       <div>
-        <p>{item.count}</p>
+        <button type="button" onClick={handlePlus}>
+          +
+        </button>
+        <p>{count}</p>
+        <button type="button" onClick={handleMinus}>
+          -
+        </button>
       </div>
-      <button type="button" onClick={() => onDelete(item.productId)}>
+      <button type="button" onClick={handleRemove}>
         x
-      </button> */}
+      </button>
     </li>
   );
 }

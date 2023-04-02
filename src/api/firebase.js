@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { child, get, getDatabase, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, remove, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -72,4 +72,12 @@ export async function getCart(userId) {
       // return Object.values(items);
     })
     .catch(console.error);
+}
+
+export async function removeCart(userId, cartId) {
+  return remove(ref(db, `carts/${userId}/${cartId}`));
+}
+
+export async function modifyCart(userId, cartId, cart) {
+  set(ref(db, `carts/${userId}/${cartId}`), cart);
 }
