@@ -1,12 +1,15 @@
 import { useRef, useState } from "react";
 import { uploadImg } from "../api/uploadImg";
 import { addNewProduct } from "../api/firebase";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useProducts from "../hooks/useProducts";
 
 export default function NewProduct() {
   const [product, setProduct] = useState(initProduct);
   const [file, setFile] = useState();
   const formRef = useRef();
   const fileRef = useRef();
+  const { addProduct } = useProducts();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,11 +24,20 @@ export default function NewProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const img = await uploadImg(file);
-    await addNewProduct({ ...product, date: Date.now(), img });
+    uploadImg(file).then((img) => {
+      addProduct.mutate(
+        { ...product, date: Date.now(), img },
+        {
+          onSuccess: () => {
+            alert("상품이 업로드 되었습니다.");
+            resetForm();
+          },
+        }
+      );
+    });
+  };
 
-    alert("상품이 업로드 되었습니다.");
-
+  const resetForm = () => {
     formRef.current.reset();
     setFile();
     setProduct(initProduct);

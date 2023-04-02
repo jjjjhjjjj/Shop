@@ -44,7 +44,8 @@ export async function addNewProduct(product) {
 export async function getProducts() {
   return get(child(ref(db), `products`))
     .then((snapshot) => {
-      return snapshot.val() || {};
+      const data = snapshot.val() || {};
+      return Object.values(data);
     })
     .catch(console.error);
 }

@@ -20,7 +20,6 @@ export default function MyCart() {
       0
     );
 
-  console.log(totalPrice);
   return (
     <section>
       {!carts && <p>장바구니에 상품이 없습니다.</p>}

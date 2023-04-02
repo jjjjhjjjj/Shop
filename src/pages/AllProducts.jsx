@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { getProducts } from "../api/firebase";
 import ProductCard from "../components/ProductCard";
+import useProducts from "../hooks/useProducts";
 
 export default function AllProducts() {
-  const [products, setProducts] = useState();
-  useEffect(() => {
-    getProducts().then((data) => setProducts(Object.values(data)));
-  }, []);
+  const { productsQuery } = useProducts();
+  const { isLoading, data: products } = productsQuery;
+
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
 
   return (
     <>
