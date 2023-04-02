@@ -1,13 +1,14 @@
-export default function ProductCard({
-  product: { id, name, img, price, category },
-  onRedirect,
-}) {
-  const handleClick = () => {
-    onRedirect(id);
-  };
+import { Navigate, useNavigate } from "react-router-dom";
 
+export default function ProductCard({ product }) {
+  const navigate = useNavigate();
+  const { id, name, img, price, category } = product;
   return (
-    <li onClick={handleClick}>
+    <li
+      onClick={() => {
+        navigate(`/products/${id}`, { state: { product } });
+      }}
+    >
       <img src={img} alt="" />
       <div>
         <p>{name}</p>

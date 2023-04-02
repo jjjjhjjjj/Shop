@@ -64,3 +64,12 @@ export async function getProduct(callback, id) {
 export async function addCartProduct(userId, cart) {
   set(ref(db, `carts/${userId}/${Date.now()}`), cart);
 }
+
+export async function getCart(userId) {
+  return get(child(ref(db), `carts/${userId}`))
+    .then((snapshot) => {
+      return snapshot.val() || {};
+      // return Object.values(items);
+    })
+    .catch(console.error);
+}

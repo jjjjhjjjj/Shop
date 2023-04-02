@@ -1,32 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { addCartProduct, getProduct } from "../api/firebase";
+import { useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { addCartProduct } from "../api/firebase";
 import { useAuth } from "../context/authContext";
 
 export default function ProductDetail() {
   const { user } = useAuth();
-  const { id } = useParams();
   const selectRef = useRef();
   const [isShow, setIsShow] = useState(false);
-  const [product, setProduct] = useState();
-
-  useEffect(() => {
-    getProduct(setProduct, id);
-  }, []);
-
-  const getOptions = () => {
-    const optionsArray = product.options.split(",");
-    return optionsArray.map((option, index) => (
-      <option key={index} value={option}>
-        {option}
-      </option>
-    ));
-  };
+  const {
+    state: {
+      product: { id, category, img, name, price, options, desc },
+    },
+  } = useLocation();
 
   const handleClick = () => {
     const cart = {
+      name,
+      price,
+      img,
       count: 1,
-      productId: product.id,
+      productId: id,
       option: selectRef.current.value,
     };
 
@@ -43,18 +36,18 @@ export default function ProductDetail() {
 
   return (
     <>
-      {product && (
+      {id && (
         <section>
-          <p>{product.category}</p>
-          <img src={product.img} alt="" />
+          <p>{category}</p>
+          <img src={img} alt="" />
           <div>
-            <h3>{product.name}</h3>
-            <strong>{product.price}</strong>
+            <h3>{name}</h3>
+            <strong>{price}</strong>
             <hr />
-            <p>{product.desc}</p>
+            <p>{desc}</p>
 
             <select name="option" ref={selectRef}>
-              {getOptions()}
+              {getOptions(options)}
             </select>
 
             {user && (
@@ -70,3 +63,12 @@ export default function ProductDetail() {
     </>
   );
 }
+
+const getOptions = (options) => {
+  const optionsArray = options.split(",");
+  return optionsArray.map((option, index) => (
+    <option key={index} value={option}>
+      {option}
+    </option>
+  ));
+};
