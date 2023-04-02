@@ -2,8 +2,9 @@ import ProductCard from "../components/ProductCard";
 import useProducts from "../hooks/useProducts";
 
 export default function AllProducts() {
-  const { productsQuery } = useProducts();
-  const { isLoading, data: products } = productsQuery;
+  const {
+    productsQuery: { isLoading, data: products },
+  } = useProducts();
 
   if (isLoading) {
     return <p>Loading ...</p>;

@@ -57,8 +57,8 @@ export async function addOrModifyCart(userId, cart) {
 export async function getCart(userId) {
   return get(child(ref(db), `carts/${userId}`))
     .then((snapshot) => {
-      return snapshot.val() || {};
-      // return Object.values(items);
+      const data = snapshot.val() || {};
+      return Object.values(data);
     })
     .catch(console.error);
 }

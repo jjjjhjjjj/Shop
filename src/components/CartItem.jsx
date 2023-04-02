@@ -1,16 +1,13 @@
-import { addOrModifyCart, removeCart } from "../api/firebase";
-import { useAuth } from "../context/authContext";
+import useCarts from "../hooks/useCarts";
 
 export default function CartItem({
   cart,
   cart: { img, name, option, price, count },
 }) {
-  const {
-    user: { uid },
-  } = useAuth();
+  const { addOrModifyItem, removeItem } = useCarts();
 
   const handlePlus = () => {
-    addOrModifyCart(uid, { ...cart, count: count + 1 });
+    addOrModifyItem.mutate({ ...cart, count: count + 1 });
   };
 
   const handleMinus = () => {
@@ -18,11 +15,11 @@ export default function CartItem({
       return;
     }
 
-    addOrModifyCart(uid, { ...cart, count: count - 1 });
+    addOrModifyItem.mutate({ ...cart, count: count - 1 });
   };
 
   const handleRemove = () => {
-    removeCart(uid, cart.id);
+    removeItem.mutate(cart.id);
   };
 
   return (

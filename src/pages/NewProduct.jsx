@@ -1,7 +1,5 @@
 import { useRef, useState } from "react";
 import { uploadImg } from "../api/uploadImg";
-import { addNewProduct } from "../api/firebase";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useProducts from "../hooks/useProducts";
 
 export default function NewProduct() {

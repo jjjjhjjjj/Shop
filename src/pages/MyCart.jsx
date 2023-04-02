@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
 import { useAuth } from "../context/authContext";
-import { getCart } from "../api/firebase";
 import CartItem from "../components/CartItem";
+import useCarts from "../hooks/useCarts";
 
 const SHIP_PRICE = 3000;
 
 export default function MyCart() {
-  const { user } = useAuth();
-  const [carts, setCarts] = useState();
+  const {
+    cartsQuery: { isLoading, data: carts },
+  } = useCarts();
 
-  useEffect(() => {
-    getCart(user.uid).then((data) => setCarts(Object.values(data)));
-  }, []);
+  const hasCarts = carts && carts.length > 0;
 
   const totalPrice =
     carts &&
@@ -20,21 +18,27 @@ export default function MyCart() {
       0
     );
 
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
+
   return (
     <section>
-      {!carts && <p>장바구니에 상품이 없습니다.</p>}
-      {carts && (
-        <ul>
-          {carts.map((cart) => (
-            <CartItem key={cart.id} cart={cart} />
-          ))}
-        </ul>
+      {!hasCarts && <p>장바구니에 상품이 없습니다.</p>}
+      {hasCarts && (
+        <>
+          <ul>
+            {carts.map((cart) => (
+              <CartItem key={cart.id} cart={cart} />
+            ))}
+          </ul>
+          <ul>
+            <li>{totalPrice}</li>
+            <li>{SHIP_PRICE}</li>
+            <li>{totalPrice + SHIP_PRICE}</li>
+          </ul>
+        </>
       )}
-      <ul>
-        <li>{totalPrice}</li>
-        <li>{SHIP_PRICE}</li>
-        <li>{totalPrice + SHIP_PRICE}</li>
-      </ul>
     </section>
   );
 }
