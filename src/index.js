@@ -11,6 +11,7 @@ import App from "./App";
 import { AuthProvider } from "./context/authContext";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Home from "./pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, path: "/", element: <AllProducts /> },
+      { index: true, path: "/", element: <Home /> },
       {
         path: "/products",
         element: <AllProducts />,

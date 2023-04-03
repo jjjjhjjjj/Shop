@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { uploadImg } from "../api/uploadImg";
 import useProducts from "../hooks/useProducts";
+import Button from "../components/ui/Button";
 
 export default function NewProduct() {
   const [product, setProduct] = useState(initProduct);
@@ -42,17 +43,26 @@ export default function NewProduct() {
   };
 
   return (
-    <>
-      {file && <img src={URL.createObjectURL(file)} alt="Upload Img" />}
-      <form ref={formRef}>
+    <section className="w-full text-center">
+      <h2 className="text-2xl font-bold my-4">새로운 제품 등록</h2>
+      {file && (
+        <img
+          className="w-96 mx-auto mb-2"
+          src={URL.createObjectURL(file)}
+          alt="Upload Img"
+        />
+      )}
+      <form className="flex flex-col px-12" ref={formRef}>
         <input
           type="file"
           name="img"
           ref={fileRef}
           onChange={handleUploadImg}
+          className="mb-3"
         />
         {Object.keys(inputs).map((key) => (
           <input
+            className="h-14 border-solid border-2 mb-5"
             type={key === "price" ? "number" : "text"}
             key={key}
             name={key}
@@ -61,11 +71,10 @@ export default function NewProduct() {
             onChange={handleChange}
           />
         ))}
-        <button type="submit" onClick={handleSubmit}>
-          상품 등록하기
-        </button>
+
+        <Button text="상품 등록하기" onClick={handleSubmit} />
       </form>
-    </>
+    </section>
   );
 }
 

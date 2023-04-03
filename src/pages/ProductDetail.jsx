@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import useCarts from "../hooks/useCarts";
+import Button from "../components/ui/Button";
 
 export default function ProductDetail() {
   const { user } = useAuth();
@@ -41,30 +42,30 @@ export default function ProductDetail() {
 
   return (
     <>
-      {id && (
-        <section>
-          <p>{category}</p>
-          <img src={img} alt="" />
-          <div>
-            <h3>{name}</h3>
-            <strong>{price}</strong>
-            <hr />
-            <p>{desc}</p>
+      <p className="mx-12 mt-4 text-gray-700">{category}</p>
+      <section className="flex flex-col md:flex-row p-4">
+        <img className="w-full px-4 basis-7/12" src={img} alt="" />
+        <div className="w-full basis-5/12 flex flex-col p-4">
+          <h3 className="text-3xl font-bold py-2">{name}</h3>
+          <strong className="text-2xl font-bold py-2  border-b border-gray-400">
+            {price}
+          </strong>
 
-            <select name="option" ref={selectRef}>
-              {getOptions(options)}
-            </select>
+          <p className="py-4 text-lg">{desc}</p>
 
-            {user && (
-              <button type="button" onClick={handleClick}>
-                장바구니에 추가
-              </button>
-            )}
+          <select
+            className="p-2 m-4 border-2 border-dashed border-brand outline-none"
+            name="option"
+            ref={selectRef}
+          >
+            {getOptions(options)}
+          </select>
 
-            {isShow && <p>✅ 장바구니에 담겼습니다.</p>}
-          </div>
-        </section>
-      )}
+          {user && <Button text="장바구니에 추가" onClick={handleClick} />}
+
+          {isShow && <p className="my-2">✅ 장바구니에 담겼습니다.</p>}
+        </div>
+      </section>
     </>
   );
 }

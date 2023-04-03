@@ -1,24 +1,25 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import User from "./User";
+import Button from "./ui/Button";
 
 export default function Header() {
   const { user, login, logout } = useAuth();
 
   return (
-    <header>
+    <header className="flex justify-between border-b border-gray-300 p-2">
       <Link to="/">
-        <h1>Shoppy</h1>
+        <h1 className="flex items-center text-3xl text-brand">Shoppy</h1>
       </Link>
-      <nav>
+      <nav className="flex items-center gap-4 font-semibold">
         <Link to="/products">Products</Link>
         {user && <Link to="/carts">Cart</Link>}
         <Link to="/products/new">AddProduct</Link>
         {user && <User user={user} />}
         {user ? (
-          <button onClick={logout}>로그아웃</button>
+          <Button text="로그아웃" onClick={logout} />
         ) : (
-          <button onClick={login}>로그인</button>
+          <Button text="로그인" onClick={login} />
         )}
       </nav>
     </header>
