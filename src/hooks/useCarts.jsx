@@ -3,9 +3,7 @@ import { getCart, addOrModifyCart, removeCart } from "../api/firebase";
 import { useAuth } from "../context/authContext";
 
 export default function useCarts() {
-  const {
-    user: { uid },
-  } = useAuth();
+  const { uid } = useAuth();
   const queryClient = useQueryClient();
 
   const cartsQuery = useQuery(["carts", uid || ""], () => getCart(uid), {
