@@ -18,7 +18,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
+const auth = getAuth(app);
 const db = getDatabase();
 
 export function login() {
@@ -42,9 +42,11 @@ export async function addNewProduct(product) {
 }
 
 export async function getProducts() {
+  console.log(process.env.REACT_APP_FIREBASE_DATABASE_URL);
   return get(child(ref(db), `products`))
     .then((snapshot) => {
       const data = snapshot.val() || {};
+      console.log(snapshot);
       return Object.values(data);
     })
     .catch(console.error);

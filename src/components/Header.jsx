@@ -14,7 +14,7 @@ export default function Header() {
       <nav className="flex items-center gap-4 font-semibold">
         <Link to="/products">Products</Link>
         {user && <Link to="/carts">Cart</Link>}
-        <Link to="/products/new">AddProduct</Link>
+        {user && <Link to="/products/new">AddProduct</Link>}
         {user && <User user={user} />}
         {user ? (
           <Button text="로그아웃" onClick={logout} />
