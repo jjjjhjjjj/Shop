@@ -28,11 +28,11 @@
 ![상품 추가](https://user-images.githubusercontent.com/64426431/232678557-4c96fa06-7024-4517-9c64-4c60d588f399.png)
 <br>
  
- - 상품 상세 페이지<br>
+ - 상품 상세 페이지<br><br>
  ![상품 추가](https://user-images.githubusercontent.com/64426431/232678771-f299a9a4-deb4-45eb-8940-0aeb87a5c540.png) 
 <br>
  
- - 장바구니 페이지<br>
+ - 장바구니 페이지<br><br>
  ![장바구니](https://user-images.githubusercontent.com/64426431/232678833-d8719b00-de60-4fcb-86eb-893c79d37c02.png) 
 <br>
  
